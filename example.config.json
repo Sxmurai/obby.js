@@ -1,0 +1,10 @@
+{
+  "token": "bot token here",
+  "prefix": "bot prefix",
+  "nodes": [
+    {
+      "port": 9595,
+      "password": "youshallnotpass"
+    }
+  ]
+}
