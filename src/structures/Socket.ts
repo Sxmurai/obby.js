@@ -19,6 +19,9 @@ export class Socket {
 
   public constructor(obsidian: Obsidian, options: SocketOptions) {
     options.secure = options.secure ?? false;
+    options.name = options.name ?? `Node ${obsidian.sockets.size + 1}`;
+    options.address = options.address ?? "localhost";
+    options.port = options.port ?? 3030; // default obsidian port
 
     this.obsidian = obsidian;
     this.options = options;
@@ -126,9 +129,9 @@ export class Socket {
 }
 
 export interface SocketOptions {
-  name: string;
-  address: string | number;
-  port: number;
+  name?: string;
+  address?: string | number;
+  port?: number;
   password: string;
   secure?: boolean;
 }
