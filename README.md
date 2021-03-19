@@ -26,11 +26,11 @@ const client = new Client({
 client.music = new Obsidian({
   nodes: [
     {
-      name: "Node's Name", // optional
-      address: "localhost",
-      port: 3030, // port it's connected to
-      password: "youshallnotpass", // set in the .obsidianrc
-      secure: false, // only set to true if you have the server running with https
+      name: "Node's Name", // optional, used to identify what node youre using
+      address: "localhost", // also optional, defaults to "localhost"
+      port: 3030, // also optional, defaults to 3030 as the default is
+      password: "youshallnotpass", // only option needed. set in the .obsidianrc
+      secure: false, // defaults to false. only set to true if you have the server running with https
     },
   ],
   plugins: [], // the plugins to use soon:tm:
