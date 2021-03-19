@@ -2,6 +2,8 @@
 
 An unofficial JavaScript wrapper for [obsidian](https://github.com/mixtape-bot/obsidian).
 
+Note: Obsidian is not done yet. This client as of currently is only for testing purposes. When Obsidian is released in full, this project will be maintained. This is for the pre-release version of 1.0.0
+
 ## example usage
 
 ```js
