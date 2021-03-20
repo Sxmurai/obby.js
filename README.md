@@ -2,55 +2,53 @@
 
 An unofficial JavaScript wrapper for [obsidian](https://github.com/mixtape-bot/obsidian).
 
-Note: Obsidian is not done yet. This client as of currently is only for testing purposes. When Obsidian is released in full, this project will be maintained. This is for the pre-release version of 1.0.0
+---
 
-oh and btw i take ownership of first working client for obsidian kthx
+## example code
+
+```js
+import { Obsidian } from "obby.js";
+
+const obsidian = new Obsidian({
+  nodes: [
+    /* Nodes to add */
+  ],
+  send: (id, payload) => {
+    // this function is for eris
+    const guild = <client>.guilds.get(id); // <client> refers to your client object
+    if (guild) {
+      // send the op code  + the payload data. not a priority packet so we set that to false.
+      guild.shard.sendWs(payload.op, payload.d, false);
+    }
+  },
+  id: "some user id", // your bots user id. this is optional, as you can put the user ID in the `init` function. Shown below.
+});
+
+obsidian.init(<client>.user.id); // <client> refers to your client object.
+```
 
 ---
 
-## example usage
+## getting started
 
-```js
-const { Obsidian } = require("obby.js");
-const { Client, Intents } = require("discord.js");
+You'll first want to go to the [obsidian](https://github.com/mixtape-bot/obsidian) and go to the releases tab. There just download the latest JAR. You will need [Java 13+](https://www.azul.com/downloads/zulu-community/?version=java-13-mts&package=jdk).
 
-const client = new Client({
-  ws: {
-    intents: new Intents()
-      .add("GUILDS")
-      .add("GUILD_MESSAGES")
-      .add("GUILD_VOICE_STATES"),
-  },
-});
+Go into your bots project and setup an NPM project (npm or yarn works good, i prefer yarn). Install obby.js with either `yarn add obby.js` or `npm install obby.js`, whichever one applies to you.
 
-client.music = new Obsidian({
-  nodes: [
-    {
-      name: "Node's Name", // optional, used to identify what node youre using
-      address: "localhost", // also optional, defaults to "localhost"
-      port: 3030, // also optional, defaults to 3030 as the default is
-      password: "youshallnotpass", // only option needed. set in the .obsidianrc
-      secure: false, // defaults to false. only set to true if you have the server running with https
-    },
-  ],
-  plugins: [], // the plugins to use soon:tm:
-  send: (guildId, payload) => {
-    const guild = client.guilds.get(guildId);
-    if (guild) {
-      guild.shard.sendWs(payload.op, payload.d, false);
-      // for djs use
-      // guild.shard.send(payload)
-    }
-  },
-});
+After that, make a new folder in that bot directory. Let's say we name it `obsidian`. Put the JAR you downloaded from the releases tab and put it into the obsidian folder. You'll then want to grab yourself a copy of the [.obsidianrc](https://github.com/mixtape-bot/obsidian/blob/main/.obsidianrc). Make a new file named `.obsidianrc` in your obsidian directory and copy-paste that example config into that file. Change the password. Changing the port is optional.
 
-// playing
-client.music.play("base64 encoded track");
+Open up a terminal in that directory and type `java -jar Obsidian.jar`. If you get any runtime error such as something along the lines of "compiled for a more recent version of the Java Runtime" you will need to install Java 13+.
 
-// pausing/resuming
-client.music.pause();
-client.music.resume();
+Then, you can look at our [example bot](https://github.com/Sxmurai/obby.js/tree/example-bot) for examples on how to use the client.
 
-// seeking
-client.music.seek(5000); // replace 5000 with the time in milliseconds
-```
+P.S: If you want to use filters, it does not work on windows. Run it on linux if you want to be able to use the Player#filters function.
+
+---
+
+Need help? Join [a server that doesnt exist yet lol]() for support. I will **not** help you if you cannot read/do not know the basics of JavaScript.
+
+Thank you!
+
+---
+
+<h5 align="center">aesthetical - 2021</h5>

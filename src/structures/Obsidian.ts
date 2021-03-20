@@ -20,10 +20,17 @@ export class Obsidian extends EventEmitter {
     this.options = options;
   }
 
-  public init() {
+  public init(id?: string) {
     // check if any nodes were even provided
     if (!this.options.nodes.length) {
       throw new Error("You did not provide any nodes");
+    }
+
+    if (!this.options.id && !id) {
+      throw new Error("No ID was provided.");
+    } else if (!this.options.id && id) {
+      // set the user id if none provided in constructor, but in this function
+      this.options.id = id;
     }
 
     // go through each node and create a new socket class
@@ -152,7 +159,7 @@ export class Obsidian extends EventEmitter {
 
 export interface ObsidianOptions {
   nodes: SocketOptions[];
-  id: string;
+  id?: string;
   send: (id: string, payload: any) => any;
 }
 
