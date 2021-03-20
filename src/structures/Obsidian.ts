@@ -103,10 +103,10 @@ export class Obsidian extends EventEmitter {
           },
         },
         (response) => {
-          const data = Buffer.alloc(0);
+          let data = Buffer.alloc(0);
 
           response
-            .on("data", (c) => Buffer.concat([data, c]))
+            .on("data", (c) => (data = Buffer.concat([data, c])))
             .on("error", (error) => rej(error))
             .on("end", () => res(JSON.parse(data.toString())));
         }
@@ -143,10 +143,10 @@ export class Obsidian extends EventEmitter {
           },
         },
         (response) => {
-          const data = Buffer.alloc(0);
+          let data = Buffer.alloc(0);
 
           response
-            .on("data", (c) => Buffer.concat([data, c]))
+            .on("data", (c) => (data = Buffer.concat([data, c])))
             .on("error", (error) => rej(error))
             .on("end", () => res(JSON.parse(data.toString())));
         }
