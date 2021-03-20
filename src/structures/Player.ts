@@ -32,13 +32,32 @@ export class Player extends EventEmitter {
     // this will be set in Obsidian#create if none is provided
     this.socket = options.socket!;
     this.#obsdian = obsidian;
+
+    if (options.handleVcMove) {
+      this.on("move", ({ channel_id, self_deaf, self_mute }) => {
+        this.destroy();
+        this.connect(channel_id, { deaf: self_deaf, mute: self_mute });
+        this.play(this.track, { start: this.stats.playingTrack.position });
+      });
+    }
   }
 
   public handleVoice(packet: any) {
+    if (this._state && "user_id" in packet) {
+      if (packet.user_id !== this.#obsdian.options.id) {
+        return;
+      }
+    }
+
     if ("token" in packet) {
       this._server = packet;
     } else {
       this._state = packet;
+    }
+
+    if (this._state.channel_id !== this.channel) {
+      this.emit("moved", this._state);
+      this.channel = this._state.channel_id;
     }
 
     if (this._state && this._server) {
@@ -47,8 +66,7 @@ export class Player extends EventEmitter {
         ...this._server,
       });
 
-      delete this._server;
-      delete this._state;
+      this._server = this._state = undefined;
     }
   }
 
@@ -97,6 +115,13 @@ export class Player extends EventEmitter {
         self_mute: null,
       },
     });
+  }
+
+  /**
+   * Destroys the player
+   */
+  public destroy() {
+    this.send(OpCodes.DESTROY);
   }
 
   /**

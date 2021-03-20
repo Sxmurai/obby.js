@@ -63,7 +63,8 @@ export class Obsidian extends EventEmitter {
     }
 
     // TODO: make better socket selection if none provided
-    options.socket = options.socket ?? [...this.sockets.values()][0];
+    options.socket ??= [...this.sockets.values()][0];
+    options.handleVcMove ??= true;
 
     const player = new Player(this, options);
     this.players.set(options.guild, player);
@@ -166,6 +167,7 @@ export interface ObsidianOptions {
 export interface PlayerCreateOptions {
   guild: string;
   socket?: Socket;
+  handleVcMove?: boolean;
 }
 
 export interface ObsidianTrackResponse {

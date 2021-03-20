@@ -17,6 +17,7 @@ export declare class Player extends EventEmitter {
     handleVoice(packet: any): void;
     connect(channel: string, options?: ConnectOptions): void;
     disconnect(): void;
+    destroy(): void;
     play(track: string, options?: PlayTrackOptions): void;
     stop(): void;
     seek(position: number): void;

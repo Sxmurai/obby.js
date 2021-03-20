@@ -21,6 +21,7 @@ export interface ObsidianOptions {
 export interface PlayerCreateOptions {
     guild: string;
     socket?: Socket;
+    handleVcMove?: boolean;
 }
 export interface ObsidianTrackResponse {
     load_type: ObsidianTrackResponseLoadtype;
