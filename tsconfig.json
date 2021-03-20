@@ -3,6 +3,8 @@
   "compilerOptions": {
     "target": "ES2019",
     "module": "CommonJS",
+    "declaration": true,
+    "declarationDir": "typings",
     "strict": true,
     "alwaysStrict": true,
     "esModuleInterop": true,

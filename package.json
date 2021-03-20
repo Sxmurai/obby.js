@@ -1,12 +1,13 @@
 {
   "name": "obby.js",
   "version": "1.0.1-fix",
-  "description": "A wrapper for https://github.com/mixtape-bot/obsidian",
+  "description": "A NodeJS wrapper for https://github.com/mixtape-bot/obsidian",
   "main": "build/index.js",
   "repository": "https://github.com/n/a",
   "author": "Sxmurai (gavrw0607@gmail.com)",
   "license": "GPL-3.0",
   "private": false,
+  "types": "./typings",
   "dependencies": {
     "ws": "^7.4.4"
   },
