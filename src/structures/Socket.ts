@@ -123,7 +123,7 @@ export class Socket {
   }
 
   private _onError(event: ws.ErrorEvent) {
-    throw new event.error();
+    this.obsidian.emit("error", this, event.error);
   }
 }
 
