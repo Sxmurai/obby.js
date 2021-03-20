@@ -143,6 +143,11 @@ export class Player extends EventEmitter {
     this.send(OpCodes.PAUSE, { state: false });
   }
 
+  /**
+   * Sends a packet to the socket used for this player
+   * @param {OpCodes} op
+   * @param {?any} payload
+   */
   public send(op: OpCodes, payload?: any) {
     this.socket.send(op, { guild_id: this.guild, ...payload });
   }
