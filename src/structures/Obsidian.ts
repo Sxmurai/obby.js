@@ -35,14 +35,14 @@ export class Obsidian extends EventEmitter {
 
     // go through each node and create a new socket class
     for (const node of this.options.nodes) {
-      node.name = node.name ?? `Node ${this.sockets.size + 1}`;
+      const name = node.name ?? `Node ${this.sockets.size + 1}`;
 
-      if (this.sockets.has(node.name!)) {
+      if (this.sockets.has(name)) {
         continue; // no need to do anything else
       }
 
       // add the node
-      this.sockets.set(node.name!, new Socket(this, node));
+      this.sockets.set(name, new Socket(this, node));
     }
   }
 
