@@ -1,5 +1,3 @@
-const { Util } = require("../Util");
-
 module.exports = {
   trigger: "play",
   triggers: ["p"],
@@ -20,9 +18,11 @@ module.exports = {
 
     player = client.music.create({ guild: guildID });
 
-    const { tracks } = await Util.fetchTracks(search);
+    const { tracks, load_type } = await client.music.search(
+      `ytsearch:${search}`
+    );
 
-    if (!tracks.length) {
+    if (!tracks.length || ["NO_MATCHES", "LOAD_FAILED"].includes(load_type)) {
       channel.createMessage("Nothing was found for that.");
       client.music.destroy(guildID);
       return;

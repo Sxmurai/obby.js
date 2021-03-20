@@ -18,14 +18,4 @@ module.exports.Util = class Util {
 
     return files;
   }
-
-  static async fetchTracks(search) {
-    return await (
-      await fetch(
-        `http://${nodes[0].address}:${
-          nodes[0].port
-        }/loadtracks?identifier=ytsearch:${encodeURIComponent(search)}`
-      )
-    ).json();
-  }
 };
