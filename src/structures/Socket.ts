@@ -98,6 +98,8 @@ export class Socket {
 
         player!.paused = data.d.current_track.paused;
         player!.playing = !data.d.current_track.paused;
+
+        player!.track = data.d.current_track.track;
         break;
       }
     }
