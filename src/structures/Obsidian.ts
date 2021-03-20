@@ -74,6 +74,7 @@ export class Obsidian extends EventEmitter {
 
   public destroy(guild: string) {
     this.players.get(guild)?.disconnect();
+    this.players.get(guild)?.destroy();
     this.players.delete(guild);
   }
 
