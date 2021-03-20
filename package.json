@@ -8,6 +8,6 @@
   "dependencies": {
     "eris": "^0.14.0",
     "node-fetch": "^2.6.1",
-    "obby.js": "^1.0.1"
+    "obby.js": "^1.0.3"
   }
 }

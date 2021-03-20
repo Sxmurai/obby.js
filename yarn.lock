@@ -17,10 +17,10 @@ node-fetch@^2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-obby.js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/obby.js/-/obby.js-1.0.0.tgz#3d1372a5c2d58e43ea50a16b5834f5b0702da162"
-  integrity sha512-5B4KPsq9XYT72Vc8MehXfbCNJ1Dok2GsYpD4umHhOmYLubNsV5Z3ylB49LJmxInNA4+SnRVqQdzhzLrlz2Q5LQ==
+obby.js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/obby.js/-/obby.js-1.0.3.tgz#36bd0be3a92d2621e3ce6c4571513adf7af685ab"
+  integrity sha512-CljeIxbgqA72BDpKl5hNxDVmVxcH/WcrEmBmFfqtAjzwzf1pBIoupoaaS862aQNN6K/2Uums3lMNiKx+IbVHeg==
   dependencies:
     ws "^7.4.4"
 
