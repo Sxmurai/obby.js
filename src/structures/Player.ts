@@ -144,6 +144,14 @@ export class Player extends EventEmitter {
   }
 
   /**
+   * Applies filters to the song
+   * @param {PlayerFilterData} data
+   */
+  public filters(data: PlayerFilterData) {
+    this.send(OpCodes.FILTERS, data);
+  }
+
+  /**
    * Sends a packet to the socket used for this player
    * @param {OpCodes} op
    * @param {?any} payload
@@ -174,4 +182,64 @@ export interface PlayTrackOptions {
   end?: number;
   start?: number;
   noReplace?: boolean;
+}
+
+export interface PlayerFilterData {
+  volume?: number;
+  tremolo?: PlayerFilterDataTremolo;
+  equalizer?: PlayerFilterDataEqualizerBands[];
+  timescale?: PlayerFilterDataTimescale;
+  karaoke?: PlayerFilterDataKaraoke;
+  channel_mix?: PlayerFilterDataChannelMix;
+  vibrato?: PlayerFilterDataVibrato;
+  rotation?: PlayerFilterDataRotation;
+  low_pass?: PlayerFilterDataLowPass;
+}
+
+export interface PlayerFilterDataTremolo {
+  frequency: number;
+  depth: number;
+}
+
+export interface PlayerFilterDataTimescale {
+  pitch: number;
+  pitch_octaves?: number;
+  picth_semi_tones?: number;
+  rate: number;
+  rate_change?: number;
+  speed?: number;
+  speed_change?: number;
+}
+
+// no idea what this is used for but here you go
+export interface PlayerFilterDataKaraoke {
+  filter_band?: number;
+  filter_width?: number;
+  level: number;
+  mono_level?: number;
+}
+
+export interface PlayerFilterDataChannelMix {
+  right_to_left: number;
+  right_to_right: number;
+  left_to_right: number;
+  left_to_left: number;
+}
+
+export interface PlayerFilterDataVibrato {
+  frequency: number;
+  depth: number;
+}
+
+export interface PlayerFilterDataRotation {
+  rotation_hz: number;
+}
+
+export interface PlayerFilterDataLowPass {
+  smoothing: number;
+}
+
+export interface PlayerFilterDataEqualizerBands {
+  band: number;
+  gain: number;
 }
