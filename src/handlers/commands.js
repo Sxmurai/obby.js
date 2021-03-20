@@ -1,6 +1,6 @@
 const { Util } = require("../Util");
 const { join } = require("path");
-const { prefix } = require("../../config.json");
+const { prefix, owners } = require("../../config.json");
 
 module.exports = (client) => {
   for (const file of Util.walk(join(__dirname, "..", "commands"))) {
@@ -26,6 +26,10 @@ module.exports = (client) => {
     );
 
     if (command) {
+      if ("ownerOnly" in command && !owners.includes(message.author.id)) {
+        return;
+      }
+
       command.execute(client, message, args);
     }
   });

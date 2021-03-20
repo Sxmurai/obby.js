@@ -6,5 +6,6 @@
       "port": 9595,
       "password": "youshallnotpass"
     }
-  ]
+  ],
+  "owners": ["your user id"]
 }
