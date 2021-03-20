@@ -239,7 +239,11 @@ export interface PlayerFilterDataLowPass {
   smoothing: number;
 }
 
-export interface PlayerFilterDataEqualizerBands {
+export interface EqualizerBands {
   band: number;
   gain: number;
+}
+
+export interface PlayerFilterDataEqualizerBands {
+  bands: EqualizerBands[];
 }
