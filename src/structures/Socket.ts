@@ -50,7 +50,7 @@ export class Socket {
 
     const headers: Record<string, string | number> = {
       Authorization: this.options.password,
-      "User-Id": options.id,
+      "User-Id": options.id!,
     };
 
     this.#useResuming = false;

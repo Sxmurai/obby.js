@@ -190,7 +190,7 @@ export interface Obsidian {
 
 export interface ObsidianOptions {
   nodes: SocketOptions[];
-  id: string;
+  id?: string;
   send: (id: string, payload: any) => any;
   resuming?: ObsidianOptionsResuming | boolean;
   dispatchBuffer?: number;
