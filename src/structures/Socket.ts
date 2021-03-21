@@ -17,6 +17,8 @@ export class Socket {
   public options: SocketOptions;
   public obsidian: Obsidian;
 
+  public connected = false;
+
   public constructor(obsidian: Obsidian, options: SocketOptions) {
     options.name = options.name ?? `Node ${obsidian.sockets.size + 1}`;
     options.secure = options.secure ?? false;
@@ -80,11 +82,50 @@ export class Socket {
           return;
         }
 
-        // for now this would work
-        player.emit(
-          data.d.type.replace(/(track_|websocket_)/gi, "").toLowerCase(),
-          data.d
-        );
+        switch (data.d.type) {
+          case "WEBSOCKET_READY": {
+            this.connected = true;
+            this.obsidian.emit("ready", this);
+            break;
+          }
+
+          case "WEBSOCKET_CLOSED": {
+            // see _onClose
+            break;
+          }
+
+          case "TRACK_START": {
+            player.emit("start", data.d.track);
+            break;
+          }
+
+          case "TRACK_END": {
+            player.emit("end", { track: data.d.track, reason: data.d.reason });
+            break;
+          }
+
+          case "TRACK_STUCK": {
+            player.emit("stuck", {
+              track: data.d.track,
+              threshold: data.d.threshold_ms,
+            });
+            break;
+          }
+
+          case "TRACK_EXCEPTION": {
+            player.emit("error", data.d.exception);
+            break;
+          }
+
+          default: {
+            // this is only here in case a new event was added, and im not aware about it. a little temp quick fix just in case
+            player.emit(
+              data.d.type.replace(/TRACK|WEBSOCKET/gi, "").toLowerCase(),
+              data.d
+            );
+          }
+        }
+
         break;
       }
 

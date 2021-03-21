@@ -159,6 +159,26 @@ export class Obsidian extends EventEmitter {
   }
 }
 
+export interface Obsidian {
+  on(event: "connected", listener: (socket: Socket) => any): this;
+  once(event: "connected", listener: (socket: Socket) => any): this;
+
+  on(event: "ready", listener: (socket: Socket) => any): this;
+  once(event: "ready", listener: (socket: Socket) => any): this;
+
+  on(event: "closed", listener: (code: number, reason?: string) => any): this;
+  once(event: "closed", listener: (code: number, reason?: string) => any): this;
+
+  on(event: "error", listener: (socket: Socket, error: Error) => any): this;
+  once(event: "error", listener: (socket: Socket, error: Error) => any): this;
+
+  on(event: "raw", listener: (socket: Socket, data: any) => any): this;
+  once(
+    event: "raw",
+    listener: (socket: Socket, op: number, data: any) => any
+  ): this;
+}
+
 export interface ObsidianOptions {
   nodes: SocketOptions[];
   id?: string;
