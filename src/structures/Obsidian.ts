@@ -1,6 +1,7 @@
 import { Socket, SocketOptions } from "./Socket";
 import { EventEmitter } from "events";
 import { Player } from "./Player";
+import { Plugin } from "./Plugin";
 
 import http from "http";
 import https from "https";
@@ -17,6 +18,9 @@ export class Obsidian extends EventEmitter {
     // remove duplicates
     options.nodes = [...new Set(options.nodes)];
 
+    // make plugins an empty array if none provided
+    options.plugins ??= [];
+
     // auto setup resuming
     options.resuming ??= {
       timeout: 60000,
@@ -27,6 +31,16 @@ export class Obsidian extends EventEmitter {
     options.dispatchBuffer ??= 60000;
 
     this.options = options;
+
+    if (this.options.plugins && this.options.plugins.length) {
+      for (const plugin of this.options.plugins) {
+        plugin.init();
+
+        if (!plugin.manualLoad) {
+          plugin.load(this);
+        }
+      }
+    }
   }
 
   public init(id?: string) {
@@ -194,6 +208,7 @@ export interface ObsidianOptions {
   send: (id: string, payload: any) => any;
   resuming?: ObsidianOptionsResuming | boolean;
   dispatchBuffer?: number;
+  plugins: Plugin[];
 }
 
 export interface ObsidianOptionsResuming {

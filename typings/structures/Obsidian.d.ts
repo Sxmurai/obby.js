@@ -2,6 +2,7 @@
 import { Socket, SocketOptions } from "./Socket";
 import { EventEmitter } from "events";
 import { Player } from "./Player";
+import { Plugin } from "./Plugin";
 export declare class Obsidian extends EventEmitter {
     options: ObsidianOptions;
     players: Map<string, Player>;
@@ -27,10 +28,11 @@ export interface Obsidian {
 }
 export interface ObsidianOptions {
     nodes: SocketOptions[];
-    id: string;
+    id?: string;
     send: (id: string, payload: any) => any;
     resuming?: ObsidianOptionsResuming | boolean;
     dispatchBuffer?: number;
+    plugins: Plugin[];
 }
 export interface ObsidianOptionsResuming {
     key?: string;
