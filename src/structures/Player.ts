@@ -34,9 +34,9 @@ export class Player extends EventEmitter {
     this.#obsdian = obsidian;
 
     if (options.handleVcMove) {
-      this.on("move", ({ channel_id, self_deaf, self_mute }) => {
+      this.on("move", ({ channel, deaf, mute }) => {
         this.destroy();
-        this.connect(channel_id, { deaf: self_deaf, mute: self_mute });
+        this.connect(channel, { deaf, mute });
         this.play(this.track, { start: this.stats.playingTrack.position });
       });
     }
@@ -56,7 +56,11 @@ export class Player extends EventEmitter {
     }
 
     if (this._state.channel_id !== this.channel) {
-      this.emit("moved", this._state);
+      this.emit("moved", {
+        channel: this._state.channel_id,
+        deaf: this._state.self_deaf,
+        mute: this._state.self_mute,
+      });
       this.channel = this._state.channel_id;
     }
 
@@ -184,6 +188,93 @@ export class Player extends EventEmitter {
   public send(op: OpCodes, payload?: any) {
     this.socket.send(op, { guild_id: this.guild, ...payload });
   }
+}
+
+export interface Player {
+  on(event: "start", listener: (track: string) => any): this;
+  once(event: "start", listener: (track: string) => any): this;
+
+  on(
+    event: "end",
+    listener: ({
+      track,
+      reason,
+    }: {
+      track: string;
+      reason: "STOPPED" | "REPLACED" | "CLEANUP" | "LOAD_FAILED" | "FINISHED";
+    }) => any
+  ): this;
+
+  on(
+    event: "stuck",
+    listener: ({
+      track,
+      threshold,
+    }: {
+      track: string;
+      threshold: number;
+    }) => any
+  ): this;
+  once(
+    event: "stuck",
+    listener: ({
+      track,
+      threshold,
+    }: {
+      track: string;
+      threshold: number;
+    }) => any
+  ): this;
+
+  on(
+    event: "move",
+    listener: ({
+      channel,
+      deaf,
+      mute,
+    }: {
+      channel: string;
+      deaf: boolean;
+      mute: boolean;
+    }) => any
+  ): this;
+  once(
+    event: "move",
+    listener: ({
+      channel,
+      deaf,
+      mute,
+    }: {
+      channel: string;
+      deaf: boolean;
+      mute: boolean;
+    }) => any
+  ): this;
+
+  on(
+    event: "error",
+    listener: ({
+      message,
+      cause,
+      severity,
+    }: {
+      message: string;
+      cause: string;
+      severity: string;
+    }) => any
+  ): this;
+  once(
+    event: "error",
+    listener: ({
+      message,
+      cause,
+      severity,
+    }: {
+      message: string;
+      cause: string;
+      severity: string;
+    }) => any
+  ): this;
 }
 
 export interface PlayerStats {
