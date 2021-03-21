@@ -13,10 +13,28 @@ export declare class Obsidian extends EventEmitter {
     search(search: string, socket?: Socket): Promise<ObsidianTrackResponse>;
     decode(track: string, socket?: Socket): Promise<ObsidianTrackResponseTracks>;
 }
+export interface Obsidian {
+    on(event: "connected", listener: (socket: Socket) => any): this;
+    once(event: "connected", listener: (socket: Socket) => any): this;
+    on(event: "ready", listener: (socket: Socket) => any): this;
+    once(event: "ready", listener: (socket: Socket) => any): this;
+    on(event: "closed", listener: (code: number, reason?: string) => any): this;
+    once(event: "closed", listener: (code: number, reason?: string) => any): this;
+    on(event: "error", listener: (socket: Socket, error: Error) => any): this;
+    once(event: "error", listener: (socket: Socket, error: Error) => any): this;
+    on(event: "raw", listener: (socket: Socket, data: any) => any): this;
+    once(event: "raw", listener: (socket: Socket, op: number, data: any) => any): this;
+}
 export interface ObsidianOptions {
     nodes: SocketOptions[];
-    id?: string;
+    id: string;
     send: (id: string, payload: any) => any;
+    resuming?: ObsidianOptionsResuming | boolean;
+    dispatchBuffer?: number;
+}
+export interface ObsidianOptionsResuming {
+    key?: string;
+    timeout: number;
 }
 export interface PlayerCreateOptions {
     guild: string;

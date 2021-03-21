@@ -26,6 +26,42 @@ export declare class Player extends EventEmitter {
     filters(data: PlayerFilterData): void;
     send(op: OpCodes, payload?: any): void;
 }
+export interface Player {
+    on(event: "start", listener: (track: string) => any): this;
+    once(event: "start", listener: (track: string) => any): this;
+    on(event: "end", listener: ({ track, reason, }: {
+        track: string;
+        reason: "STOPPED" | "REPLACED" | "CLEANUP" | "LOAD_FAILED" | "FINISHED";
+    }) => any): this;
+    on(event: "stuck", listener: ({ track, threshold, }: {
+        track: string;
+        threshold: number;
+    }) => any): this;
+    once(event: "stuck", listener: ({ track, threshold, }: {
+        track: string;
+        threshold: number;
+    }) => any): this;
+    on(event: "move", listener: ({ channel, deaf, mute, }: {
+        channel: string;
+        deaf: boolean;
+        mute: boolean;
+    }) => any): this;
+    once(event: "move", listener: ({ channel, deaf, mute, }: {
+        channel: string;
+        deaf: boolean;
+        mute: boolean;
+    }) => any): this;
+    on(event: "error", listener: ({ message, cause, severity, }: {
+        message: string;
+        cause: string;
+        severity: string;
+    }) => any): this;
+    once(event: "error", listener: ({ message, cause, severity, }: {
+        message: string;
+        cause: string;
+        severity: string;
+    }) => any): this;
+}
 export interface PlayerStats {
     frames: {
         lost: number;

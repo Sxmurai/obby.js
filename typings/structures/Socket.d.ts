@@ -3,10 +3,13 @@ export declare class Socket {
     #private;
     options: SocketOptions;
     obsidian: Obsidian;
+    connected: boolean;
     constructor(obsidian: Obsidian, options: SocketOptions);
     private init;
     send(op: OpCodes, d: any): void;
     private _onOpen;
+    private _setupResuming;
+    private _setupDispatchBuffer;
     private _onMessage;
     private _onClose;
     private _onError;
@@ -28,5 +31,7 @@ export declare enum OpCodes {
     PAUSE = 6,
     FILTERS = 7,
     SEEK = 8,
-    DESTROY = 9
+    DESTROY = 9,
+    RESUMING = 10,
+    DISPATCH_BUFFER = 11
 }
