@@ -1,5 +1,5 @@
 import ws from "ws";
-import { Obsidian } from "./Obsidian";
+import { Obsidian, ObsidianOptionsResuming } from "./Obsidian";
 
 /**
  * Handles the packets sent and recieved
@@ -18,6 +18,9 @@ export class Socket {
   public obsidian: Obsidian;
 
   public connected = false;
+
+  #useResuming = false;
+  #setupDispatchBuffer = false;
 
   public constructor(obsidian: Obsidian, options: SocketOptions) {
     options.name = options.name ?? `Node ${obsidian.sockets.size + 1}`;
@@ -43,15 +46,37 @@ export class Socket {
       this.#ws = null;
     }
 
+    const { options } = this.obsidian;
+
+    const headers: Record<string, string | number> = {
+      Authorization: this.options.password,
+      "User-Id": options.id,
+    };
+
+    this.#useResuming = false;
+
+    if (
+      (typeof options.resuming === "boolean" && options.resuming) ||
+      (options.resuming as any).timeout !== -1 ||
+      (options.resuming as any).key !== null
+    ) {
+      this.#useResuming = true;
+      headers["Resume-Key"] = (options.resuming as any).key;
+    }
+
+    if (
+      this.obsidian.options.dispatchBuffer ||
+      this.obsidian.options.dispatchBuffer !== -1
+    ) {
+      this.#setupDispatchBuffer = true;
+    }
+
     this.#ws = new ws(
       `ws${this.options.secure ? "s" : ""}://${this.options.address}:${
         this.options.port
       }`,
       {
-        headers: {
-          Authorization: this.options.password,
-          "User-Id": this.obsidian.options.id,
-        },
+        headers,
       }
     );
 
@@ -67,6 +92,39 @@ export class Socket {
 
   private _onOpen() {
     this.obsidian.emit("connected", this.options);
+
+    this._setupResuming();
+    this._setupDispatchBuffer();
+  }
+
+  private _setupResuming() {
+    if (!this.#useResuming) {
+      return;
+    }
+
+    let data = this.obsidian.options.resuming ?? {};
+
+    if (typeof data === "boolean") {
+      data = {
+        key: Math.random().toString(16).slice(2),
+        timeout: 60000,
+      };
+
+      // @ts-expect-error
+      this.obsidian.options.resuming = data;
+    }
+
+    this.send(OpCodes.RESUMING, data);
+  }
+
+  private _setupDispatchBuffer() {
+    if (!this.#setupDispatchBuffer) {
+      return;
+    }
+
+    this.send(OpCodes.DISPATCH_BUFFER, {
+      timeout: this.obsidian.options.dispatchBuffer!,
+    });
   }
 
   private _onMessage(event: ws.MessageEvent) {
@@ -190,4 +248,6 @@ export enum OpCodes {
   FILTERS,
   SEEK,
   DESTROY,
+  RESUMING,
+  DISPATCH_BUFFER, // im not too sure what this does but yeah its there and being added
 }

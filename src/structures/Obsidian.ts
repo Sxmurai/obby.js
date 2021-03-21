@@ -17,6 +17,15 @@ export class Obsidian extends EventEmitter {
     // remove duplicates
     options.nodes = [...new Set(options.nodes)];
 
+    // auto setup resuming
+    options.resuming ??= {
+      timeout: 60000,
+      key: Math.random().toString(16).slice(2),
+    };
+
+    // this is the default in the obsidian/API.md
+    options.dispatchBuffer ??= 60000;
+
     this.options = options;
   }
 
@@ -181,8 +190,15 @@ export interface Obsidian {
 
 export interface ObsidianOptions {
   nodes: SocketOptions[];
-  id?: string;
+  id: string;
   send: (id: string, payload: any) => any;
+  resuming?: ObsidianOptionsResuming | boolean;
+  dispatchBuffer?: number;
+}
+
+export interface ObsidianOptionsResuming {
+  key?: string;
+  timeout: number;
 }
 
 export interface PlayerCreateOptions {
