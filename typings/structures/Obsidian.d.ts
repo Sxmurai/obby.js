@@ -12,7 +12,7 @@ export declare class Obsidian extends EventEmitter {
     create(options: PlayerCreateOptions): Player | undefined;
     destroy(guild: string): void;
     search(search: string, socket?: Socket): Promise<ObsidianTrackResponse>;
-    decode(track: string, socket?: Socket): Promise<ObsidianTrackResponseTracks>;
+    decode(track: string, socket?: Socket): Promise<ObsidianTrackResponseTrackInfo>;
 }
 export interface Obsidian {
     on(event: "connected", listener: (socket: Socket) => any): this;
