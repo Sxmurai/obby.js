@@ -190,15 +190,17 @@ export class Socket {
       case OpCodes.UPDATE: {
         const player = this.obsidian.players.get(data.d.guild_id);
 
-        player!.stats = {
-          frames: data.d.frames,
-          playingTrack: data.d.current_track, // ew snake_case
-        };
+        if (player) {
+          player!.stats = {
+            frames: data.d.frames,
+            playingTrack: data.d.current_track, // ew snake_case
+          };
 
-        player!.paused = data.d.current_track.paused;
-        player!.playing = !data.d.current_track.paused;
+          player!.paused = data.d.current_track.paused;
+          player!.playing = !data.d.current_track.paused;
 
-        player!.track = data.d.current_track.track;
+          player!.track = data.d.current_track.track;
+        }
         break;
       }
     }
