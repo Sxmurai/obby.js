@@ -81,7 +81,7 @@ export class Socket {
     );
 
     this.#ws.onclose = this._onClose.bind(this);
-    this.#ws.onerror = this._onError;
+    this.#ws.onerror = this._onError.bind(this);
     this.#ws.onmessage = this._onMessage.bind(this);
     this.#ws.onopen = this._onOpen.bind(this);
   }
