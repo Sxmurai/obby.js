@@ -145,12 +145,12 @@ export class Obsidian extends EventEmitter {
    * Returns a JSON response from a base64 string
    * @param {string} track
    * @param {?Socket} socket
-   * @returns {Promise<ObsidianTrackResponseTracks>}
+   * @returns {Promise<ObsidianTrackResponseTrackInfo>}
    */
   public async decode(
     track: string,
     socket?: Socket
-  ): Promise<ObsidianTrackResponseTracks> {
+  ): Promise<ObsidianTrackResponseTrackInfo> {
     // TODO: make better socket selection if none provided
     socket = socket ?? [...this.sockets.values()][0];
 
