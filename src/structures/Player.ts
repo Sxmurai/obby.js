@@ -43,6 +43,10 @@ export class Player extends EventEmitter {
   }
 
   public handleVoice(packet: any) {
+    if ("d" in packet) {
+      packet = packet.d;
+    }
+
     if (this._state && "user_id" in packet) {
       if (packet.user_id !== this.#obsdian.options.id) {
         return;
