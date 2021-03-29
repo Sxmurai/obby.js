@@ -1,5 +1,5 @@
 import ws from "ws";
-import { Obsidian, ObsidianOptionsResuming } from "./Obsidian";
+import { Obsidian } from "./Obsidian";
 
 /**
  * Handles the packets sent and recieved
