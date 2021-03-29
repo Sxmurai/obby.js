@@ -121,7 +121,7 @@ export class Obsidian extends EventEmitter {
       request(
         `http${options.secure ? "s" : ""}://${options.address}:${
           options.port
-        }/loadtracks?identifier=${encodeURIComponent(search)}`,
+        }/loadtracks?identifier=${search}`,
         {
           headers: {
             Authorization: options.password,
