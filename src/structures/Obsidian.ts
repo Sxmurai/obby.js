@@ -213,7 +213,7 @@ export interface ObsidianOptions {
 
 export interface ObsidianOptionsResuming {
   key?: string;
-  timeout: number;
+  timeout?: number;
 }
 
 export interface PlayerCreateOptions {

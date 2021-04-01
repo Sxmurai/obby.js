@@ -1,5 +1,5 @@
 import ws from "ws";
-import { Obsidian } from "./Obsidian";
+import { Obsidian, ObsidianOptionsResuming } from "./Obsidian";
 
 /**
  * Handles the packets sent and recieved
@@ -57,8 +57,8 @@ export class Socket {
 
     if (
       (typeof options.resuming === "boolean" && options.resuming) ||
-      (options.resuming as any).timeout !== -1 ||
-      (options.resuming as any).key !== null
+      ((options.resuming as ObsidianOptionsResuming)?.key &&
+        (options.resuming as ObsidianOptionsResuming)?.timeout)
     ) {
       this.#useResuming = true;
       headers["Resume-Key"] = (options.resuming as any).key;
@@ -104,13 +104,12 @@ export class Socket {
 
     let data = this.obsidian.options.resuming ?? {};
 
-    if (typeof data === "boolean") {
+    if (typeof data === "boolean" && data) {
       data = {
         key: Math.random().toString(16).slice(2),
         timeout: 60000,
       };
 
-      // @ts-expect-error
       this.obsidian.options.resuming = data;
     }
 
