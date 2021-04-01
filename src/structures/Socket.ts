@@ -55,13 +55,10 @@ export class Socket {
 
     this.#useResuming = false;
 
-    if (
-      (typeof options.resuming === "boolean" && options.resuming) ||
-      ((options.resuming as ObsidianOptionsResuming)?.key &&
-        (options.resuming as ObsidianOptionsResuming)?.timeout)
-    ) {
+    if (options.resuming) {
       this.#useResuming = true;
-      headers["Resume-Key"] = (options.resuming as any).key;
+      headers["Resume-Key"] =
+        (options.resuming as any).key ?? Math.random().toString(16).slice(2);
     }
 
     if (
@@ -102,12 +99,12 @@ export class Socket {
       return;
     }
 
-    let data = this.obsidian.options.resuming ?? {};
+    let data = this.obsidian.options.resuming;
 
-    if (typeof data === "boolean" && data) {
+    if (data) {
       data = {
-        key: Math.random().toString(16).slice(2),
-        timeout: 60000,
+        key: data.key ?? Math.random().toString(16).slice(2),
+        timeout: data.timeout ?? 60000,
       };
 
       this.obsidian.options.resuming = data;

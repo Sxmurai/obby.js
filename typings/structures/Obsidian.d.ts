@@ -30,13 +30,13 @@ export interface ObsidianOptions {
     nodes: SocketOptions[];
     id?: string;
     send: (id: string, payload: any) => any;
-    resuming?: ObsidianOptionsResuming | boolean;
+    resuming?: ObsidianOptionsResuming;
     dispatchBuffer?: number;
     plugins: Plugin[];
 }
 export interface ObsidianOptionsResuming {
     key?: string;
-    timeout: number;
+    timeout?: number;
 }
 export interface PlayerCreateOptions {
     guild: string;

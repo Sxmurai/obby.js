@@ -21,12 +21,6 @@ export class Obsidian extends EventEmitter {
     // make plugins an empty array if none provided
     options.plugins ??= [];
 
-    // auto setup resuming
-    options.resuming ??= {
-      timeout: 60000,
-      key: Math.random().toString(16).slice(2),
-    };
-
     // this is the default in the obsidian/API.md
     options.dispatchBuffer ??= 60000;
 
@@ -206,7 +200,7 @@ export interface ObsidianOptions {
   nodes: SocketOptions[];
   id?: string;
   send: (id: string, payload: any) => any;
-  resuming?: ObsidianOptionsResuming | boolean;
+  resuming?: ObsidianOptionsResuming;
   dispatchBuffer?: number;
   plugins: Plugin[];
 }
