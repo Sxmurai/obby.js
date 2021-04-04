@@ -9,6 +9,7 @@
   "private": false,
   "types": "./typings",
   "dependencies": {
+    "centra": "^2.4.2",
     "ws": "^7.4.4"
   },
   "devDependencies": {
