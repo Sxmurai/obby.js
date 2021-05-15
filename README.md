@@ -7,9 +7,9 @@ An unofficial JavaScript wrapper for [obsidian](https://github.com/mixtape-bot/o
 ## example code
 
 ```js
-import { Obsidian } from "obby.js";
+import { Manager } from "obby.js";
 
-const obsidian = new Obsidian({
+const manager = new Manager({
   nodes: [
     /* Nodes to add */
   ],
@@ -24,7 +24,7 @@ const obsidian = new Obsidian({
   id: "some user id", // your bots user id. this is optional, as you can put the user ID in the `init` function. Shown below.
 });
 
-obsidian.init(<client>.user.id); // <client> refers to your client object.
+manager.init(<client>.user.id); // <client> refers to your client object.
 ```
 
 ---
