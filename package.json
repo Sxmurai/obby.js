@@ -1,6 +1,6 @@
 {
   "name": "obby.js",
-  "version": "2.0.0-prerelease",
+  "version": "2.0.0-pr",
   "description": "A NodeJS wrapper for https://github.com/mixtape-bot/obsidian",
   "main": "build/index.js",
   "repository": "https://github.com/n/a",
