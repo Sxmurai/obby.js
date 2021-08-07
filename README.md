@@ -1,5 +1,13 @@
 # obby.js
 
+---
+
+## ARCHIVED UNTIL FURTHER NOTICE
+
+I had plans on rewriting, but I eventually lost the code and I'm not going to be on discord anymore anyway. You can still use it for older versions of obsidian, but I can't say you can for newer versions.
+
+---
+
 An unofficial JavaScript wrapper for [obsidian](https://github.com/mixtape-bot/obsidian).
 
 ---
